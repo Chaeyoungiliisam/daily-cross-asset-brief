@@ -1,0 +1,42 @@
+name: Daily update 💚
+
+on:
+  schedule:
+    - cron: "7 23 * * 0-4"   # 한국시간 평일 08:07 (미국 마감 브리프)
+    - cron: "7 7 * * 1-5"    # 한국시간 평일 16:07 (한국 마감 브리프)
+  workflow_dispatch: {}       # Actions 탭에서 '지금 실행' 버튼
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 데이터 수집
+        run: python scripts/fetch.py
+
+      - name: 페이지 만들기
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}   # 없으면 자동으로 건너뜀
+        run: python scripts/build.py
+
+      - name: 저장하고 배포
+        run: |
+          git config user.name "daily-brief-bot"
+          git config user.email "daily-brief-bot@users.noreply.github.com"
+          git add data docs
+          git diff --cached --quiet && echo "변경 없음" && exit 0
+          git commit -m "🍀 브리프 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M KST')"
+          git push
