@@ -180,8 +180,14 @@ def fetch_flows():
             num = lambda s: int(str(s).replace(",", "").replace("+", ""))
             d = j["bizdate"]
             d = f"{d[:4]}-{d[4:6]}-{d[6:]}"
-            flows[key] = {"date": d, "외국인": num(j["foreignValue"]), "개인": num(j["personalValue"]),
-                          "기관": num(j["institutionalValue"])}
+            row = {"date": d, "외국인": num(j["foreignValue"]), "개인": num(j["personalValue"]),
+                   "기관": num(j["institutionalValue"])}
+            if not any(row[w] for w in ("외국인", "개인", "기관")):
+                log["flows_" + key] = f"skip {d} 장 시작 전(0) → 이전 값 유지"
+                continue
+            flows.setdefault("by_date", {}).setdefault(d, {})[key] = row
+            flows["by_date"] = dict(sorted(flows["by_date"].items())[-30:])
+            flows[key] = row
             flows["date"] = max(flows.get("date", ""), d)
             flows["source"] = "네이버 증권 (투자자별 순매수, 억 원)"
             log["flows_" + key] = f"ok {d} 외국인 {flows[key]['외국인']}"

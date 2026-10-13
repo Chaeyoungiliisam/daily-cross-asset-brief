@@ -381,7 +381,8 @@ def kr_brief(D, flows):
     k, q, b3, b10, fx = D["^KS11"], D["^KQ11"], D.get("KR3Y"), D.get("KR10Y"), D["KRW=X"]
     tone = "상승" if k["d1"] > 0.3 else "하락" if k["d1"] < -0.3 else "보합"
     lead = f"코스피 {k['last']:,.2f}({pct(k)}) {tone}"
-    kf = flows.get("kospi") if flows.get("kospi", {}).get("date") == k["asof"] else None
+    kf = (flows.get("by_date", {}).get(k["asof"], {}).get("kospi")
+          or (flows.get("kospi") if flows.get("kospi", {}).get("date") == k["asof"] else None))
     if kf:
         who = max(kf, key=lambda w: abs(kf[w]) if w != "date" else -1)
         amt = abs(kf[who])
@@ -484,6 +485,10 @@ def main():
         if not flows.get(mk) and seed.get(mk):
             flows[mk] = dict(seed[mk], date=seed["date"])
             flows["source"] = seed.get("source", "")
+    day = flows.get("by_date", {}).get(D["^KS11"]["asof"], {})
+    for mk in ("kospi", "kosdaq"):
+        if day.get(mk):
+            flows[mk] = day[mk]
     us, kr = us_brief(D), kr_brief(D, flows)
     commentary = ai_commentary(D, us, kr, load("commentary.json", {}))
     for b, key in ((us, "us"), (kr, "kr")):
