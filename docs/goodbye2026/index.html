@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>굿바이 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cloud:#F0EEE9;      /* PANTONE 11-4201 Cloud Dancer */
+    --cloud-hi:#F8F6F2;
+    --mocha:#A47864;      /* PANTONE 17-1230 Mocha Mousse */
+    --mocha-soft:#C9A898;
+    --mocha-pale:#E6D6CB;
+    --cocoa:#5E4034;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Gaegu',cursive;
+    color:var(--cocoa);
+    background-color:var(--cloud);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55  0 0 0 0 .45  0 0 0 0 .38  0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    display:flex;justify-content:center;
+    overflow-x:hidden;
+  }
+  #bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+  .wrap{position:relative;z-index:1;width:100%;max-width:560px;padding:22px 18px 26px;display:flex;flex-direction:column;align-items:center}
+  h1{background:var(--cloud-hi);padding:8px 18px 4px;border:3px solid var(--mocha);border-radius:26px 18px 28px 16px/18px 28px 16px 26px;box-shadow:4px 5px 0 var(--mocha-pale);
+     font-size:44px;font-weight:700;letter-spacing:1px;line-height:1;color:var(--mocha);
+     text-shadow:1px 1px 0 var(--mocha-pale)}
+  h1 span{color:var(--cocoa)}
+  .sub{font-size:21px;margin-top:12px;text-align:center;background:rgba(248,246,242,.85);padding:2px 12px;border-radius:14px}
+
+  .stage{position:relative;width:100%;aspect-ratio:344/336;margin-top:4px}
+  .stage svg{width:100%;height:100%;overflow:visible;display:block}
+
+  /* animated parts */
+  #bow,#straps,#lid,#sparkles{transform-box:fill-box;transform-origin:center}
+  #bow{cursor:pointer;animation:wiggle 2.4s ease-in-out infinite}
+  #bow:hover{animation-duration:.9s}
+  #bow:focus{outline:none}
+  @keyframes wiggle{0%,100%{transform:rotate(0)}20%{transform:rotate(-5deg)}40%{transform:rotate(4deg)}60%{transform:rotate(-2deg)}}
+
+  .opened #bow{animation:bowAway .8s cubic-bezier(.5,-0.4,.7,1) forwards;cursor:default}
+  @keyframes bowAway{
+    0%{transform:scale(1) rotate(0)}
+    30%{transform:scale(1.15,.85) rotate(-8deg)}
+    100%{transform:translate(40px,-170px) scale(.2) rotate(220deg);opacity:0;visibility:hidden}}
+  #strapH{transform-box:fill-box;transform-origin:center}
+  #strapV{transform-box:fill-box;transform-origin:center top}
+  .opened #strapH{animation:slipX .55s .45s ease-in forwards}
+  .opened #strapV{animation:slipY .55s .5s ease-in forwards}
+  @keyframes slipX{to{transform:scaleX(0);opacity:0}}
+  @keyframes slipY{to{transform:scaleY(0);opacity:0}}
+  .opened #lid{animation:lidOff .9s .9s cubic-bezier(.3,1.4,.5,1) forwards}
+  @keyframes lidOff{to{transform:translate(-70px,-115px) rotate(-22deg);opacity:.0}}
+  #sparkles{opacity:0}
+  .opened #sparkles{animation:pop .7s 1.35s ease-out forwards}
+  @keyframes pop{0%{opacity:0;transform:scale(.4)}60%{opacity:1;transform:scale(1.1)}100%{opacity:1;transform:scale(1)}}
+
+  .hint{margin-top:14px;background:rgba(248,246,242,.9);padding:0 12px;border-radius:12px;
+    font-size:22px;white-space:nowrap;color:var(--mocha);pointer-events:none;transition:opacity .3s}
+  .hint::after{content:" ↓";}
+  .hint.gone{opacity:0}
+
+  /* question card */
+  .card{
+    position:absolute;left:6%;right:6%;top:16%;
+    padding:26px 22px 20px;text-align:center;
+    background:var(--cloud-hi);
+    border:3px solid var(--mocha);
+    border-radius:28px 22px 30px 20px / 22px 30px 20px 28px;
+    box-shadow:5px 6px 0 var(--mocha-pale);
+    opacity:0;transform:translateY(90px) scale(.35);pointer-events:none;
+    filter:url(#wobble);
+  }
+  .opened .card{animation:rise .8s 1.25s cubic-bezier(.3,1.5,.5,1) forwards;pointer-events:auto}
+  @keyframes rise{to{opacity:1;transform:translateY(0) scale(1)}}
+  .card .day{font-size:19px;color:var(--mocha);letter-spacing:.5px}
+  .card .q{font-size:30px;font-weight:700;line-height:1.25;margin:10px 0 18px;word-break:keep-all}
+  .btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  button{
+    font-family:inherit;font-size:20px;font-weight:700;cursor:pointer;
+    padding:7px 16px 5px;border:2.5px solid var(--mocha);
+    border-radius:18px 14px 20px 12px / 14px 20px 12px 18px;
+    background:var(--mocha);color:var(--cloud-hi);
+    box-shadow:2px 3px 0 var(--mocha-pale);transition:transform .15s}
+  button.ghost{background:transparent;color:var(--mocha)}
+  button:hover{transform:translateY(-2px) rotate(-1deg)}
+  button:active{transform:translateY(1px)}
+  .toast{font-size:18px;margin-top:10px;min-height:22px;color:var(--mocha)}
+  .left{font-size:17px;opacity:.7;margin-top:2px}
+
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important}
+  }
+</style>
+</head>
+<body>
+<svg id="bg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+    <filter id="crayonBg" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" seed="11" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2 2.1" result="m"/>
+      <feComposite in="SourceGraphic" in2="m" operator="in" result="t"/>
+      <feTurbulence type="turbulence" baseFrequency=".03" numOctaves="2" seed="4" result="w"/>
+      <feDisplacementMap in="t" in2="w" scale="6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+  <g id="bgArt" filter="url(#crayonBg)"></g>
+</svg>
+<div class="wrap">
+  <h1>굿바이 <span>2026</span></h1>
+  <p class="sub">리본을 하나씩 풀면서 올해를 정리해요</p>
+
+  <div class="hint" id="hint">리본을 당겨 봐</div>
+  <div class="stage" id="stage">
+    <svg viewBox="28 80 344 336" aria-label="리본으로 묶인 선물상자">
+      <defs>
+        <!-- crayon: grainy fill + wobbly edge -->
+        <filter id="crayon" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" seed="3" result="grain"/>
+          <feColorMatrix in="grain" type="matrix"
+            values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.4 1.75" result="mask"/>
+          <feComposite in="SourceGraphic" in2="mask" operator="in" result="tex"/>
+          <feTurbulence type="turbulence" baseFrequency=".035" numOctaves="2" seed="8" result="wob"/>
+          <feDisplacementMap in="tex" in2="wob" scale="5" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <filter id="wobble">
+          <feTurbulence type="turbulence" baseFrequency=".03" numOctaves="2" seed="2" result="w"/>
+          <feDisplacementMap in="SourceGraphic" in2="w" scale="3.5" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </defs>
+
+      <!-- shadow -->
+      <ellipse cx="200" cy="390" rx="160" ry="16" fill="#C9A898" opacity=".35" filter="url(#crayon)"/>
+
+      <!-- box body -->
+      <rect x="72" y="208" width="276" height="182" rx="16" fill="#7A5242" opacity=".35" filter="url(#crayon)"/>
+      <rect x="66" y="200" width="268" height="178" rx="14" fill="#FBF9F5"/>
+      <g id="body" filter="url(#crayon)">
+        <rect x="62" y="196" width="276" height="186" rx="16" fill="#FBF9F5"/>
+        <rect x="62" y="196" width="276" height="186" rx="16" fill="none" stroke="#5E4034" stroke-width="6"/>
+        <!-- crayon shading scribbles -->
+        <path d="M80 360 L110 330 M90 372 L130 332 M108 374 L146 336 M250 372 L292 330 M268 374 L318 324 M290 372 L326 336"
+              stroke="#C9A898" stroke-width="5" stroke-linecap="round" opacity=".8"/>
+        <path d="M76 222 q14 -6 28 0 t28 0" stroke="#E6D6CB" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <!-- little polka dots -->
+        <g fill="#D9B8A6">
+          <circle cx="110" cy="240" r="7"/><circle cx="148" cy="300" r="6"/><circle cx="96" cy="320" r="5"/>
+          <circle cx="262" cy="236" r="6"/><circle cx="300" cy="300" r="7"/><circle cx="250" cy="330" r="5"/>
+        </g>
+      </g>
+
+      <!-- sparkles that appear after opening -->
+      <g id="sparkles" filter="url(#crayon)" stroke="#A47864" stroke-width="4" stroke-linecap="round" fill="none">
+        <path d="M40 140 l0 22 M29 151 l22 0"/>
+        <path d="M360 120 l0 26 M347 133 l26 0"/>
+        <path d="M70 70 l0 14 M63 77 l14 0"/>
+        <path d="M330 60 l0 16 M322 68 l16 0"/>
+        <circle cx="30" cy="250" r="5" fill="#C9A898" stroke="none"/>
+        <circle cx="372" cy="230" r="6" fill="#C9A898" stroke="none"/>
+      </g>
+
+      <!-- ribbon straps -->
+      <g id="straps" filter="url(#crayon)">
+        <rect id="strapV" x="182" y="150" width="36" height="232" fill="#9A6B55"/>
+        <rect id="strapH" x="62" y="272" width="276" height="30" fill="#9A6B55"/>
+        <path d="M70 281 L176 279 M224 279 L330 281" stroke="#C9A898" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+      </g>
+
+      <!-- lid -->
+      <g id="lid">
+        <rect x="50" y="154" width="300" height="48" rx="12" fill="#F8F6F2"/>
+        <g filter="url(#crayon)">
+        <rect x="46" y="150" width="308" height="56" rx="14" fill="#F8F6F2"/>
+        <rect x="46" y="150" width="308" height="56" rx="14" fill="none" stroke="#5E4034" stroke-width="6"/>
+        <rect x="182" y="150" width="36" height="56" fill="#9A6B55"/>
+        <path d="M64 196 L84 170 M78 198 L100 170 M300 198 L322 170 M316 198 L336 172"
+              stroke="#C9A898" stroke-width="5" stroke-linecap="round" opacity=".55"/>
+        </g>
+      </g>
+
+      <!-- bow (click target) -->
+      <g id="bow" role="button" tabindex="0" aria-label="리본 풀기" filter="url(#crayon)">
+        <!-- tails -->
+        <path d="M196 150 C186 180 170 196 156 214 L176 214 L190 200 C196 186 198 168 200 152Z" fill="#7A5242" stroke="#5E4034" stroke-width="3"/>
+        <path d="M204 150 C214 180 230 196 244 214 L224 214 L210 200 C204 186 202 168 200 152Z" fill="#7A5242" stroke="#5E4034" stroke-width="3"/>
+        <!-- loops -->
+        <path d="M198 146 C170 96 108 92 112 130 C116 166 172 160 198 150Z" fill="#9A6B55" stroke="#5E4034" stroke-width="4"/>
+        <path d="M202 146 C230 96 292 92 288 130 C284 166 228 160 202 150Z" fill="#9A6B55" stroke="#5E4034" stroke-width="4"/>
+        <!-- loop inner folds -->
+        <path d="M190 144 C168 120 136 116 132 128" stroke="#E6D6CB" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M210 144 C232 120 264 116 268 128" stroke="#E6D6CB" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <!-- knot -->
+        <rect x="184" y="130" width="32" height="32" rx="11" fill="#7A5242" stroke="#5E4034" stroke-width="4"/>
+        <rect x="190" y="136" width="10" height="7" rx="3" fill="#C9A898"/>
+        <!-- bigger invisible hit area -->
+        <rect x="100" y="86" width="200" height="132" fill="transparent"/>
+      </g>
+    </svg>
+
+
+    <div class="card" id="card" aria-live="polite">
+      <div class="day" id="day"></div>
+      <div class="q" id="q"></div>
+      <div class="btns">
+        <button id="copy">질문 복사하기</button>
+        <button id="again" class="ghost">다시 포장하기</button>
+      </div>
+      <div class="toast" id="toast"></div>
+      <div class="left" id="left"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const QUESTIONS = [
+  "올해 나를 가장 성장시킨 상황은?",
+  "올해 가장 고마웠던 사람은?",
+  "올해 가장 행복했던 날은?",
+  "올해 가장 많이 웃었던 순간은?",
+  "올해 처음 해 본 일은?",
+  "올해 가장 용기 냈던 순간은?",
+  "올해 가장 자주 들은 노래는?",
+  "올해 먹은 것 중 제일 맛있었던 건?",
+  "올해 나에게 가장 큰 위로가 된 말은?",
+  "올해 누군가에게 해 준 일 중 제일 뿌듯했던 건?",
+  "올해 가장 아쉬웠던 선택은? 그때로 돌아간다면?",
+  "올해 새로 알게 된 나의 모습은?",
+  "올해 가장 많이 간 장소는?",
+  "올해 사진첩에서 제일 좋아하는 사진 한 장은?",
+  "올해 가장 오래 붙잡고 있던 고민은?",
+  "올해 내려놓았는데, 잘했다 싶은 것은?",
+  "올해 나를 버티게 해 준 작은 루틴은?",
+  "올해 가장 잘 산 물건은?",
+  "올해 가장 기억에 남는 대화는?",
+  "올해 새로 생긴 소중한 인연은?",
+  "연락은 뜸해졌지만 올해 문득 생각난 사람은?",
+  "올해 들은 칭찬 중 제일 오래 남은 건?",
+  "올해 나 자신에게 미안했던 일은?",
+  "올해 시간 가는 줄 모르고 몰입했던 순간은?",
+  "올해 가장 크게 울었던 날은?",
+  "올해 제일 즐거웠던 여행이나 나들이는?",
+  "올해 마음에 남은 책, 영화, 드라마는?",
+  "올해 나만 아는 작은 성공은?",
+  "올해 봄, 여름, 가을, 겨울에서 하나씩 떠오르는 장면은?",
+  "올해 가장 바빴던 주는 언제였고, 어떻게 지나왔어?",
+  "올해 내가 제일 자주 한 말은?",
+  "올해의 나에게 상을 준다면 무슨 상?",
+  "올해를 한 단어로 표현한다면?",
+  "올해를 색깔로 칠한다면 무슨 색?",
+  "올해 가장 의외였던 일은?",
+  "올해 배운 것 중 내년에도 써먹을 것은?",
+  "올해 그만두길 잘한 습관은?",
+  "올해 누군가에게 끝내 하지 못한 말이 있다면?",
+  "올해 가장 편안했던 공간은?",
+  "올해 도전했다가 실패한 것, 그래도 남은 건?",
+  "올해의 나에게 점수를 준다면 몇 점? 그 이유는?",
+  "올해 가장 설렜던 순간은?",
+  "1월의 나에게 해 주고 싶은 말은?",
+  "2026년에 두고 가고 싶은 것은?",
+  "2027년으로 꼭 챙겨 가고 싶은 것은?"
+];
+
+const KEY = "unbox2026-used";
+const stage = document.getElementById("stage");
+const bow = document.getElementById("bow");
+const qEl = document.getElementById("q");
+const dayEl = document.getElementById("day");
+const toast = document.getElementById("toast");
+const leftEl = document.getElementById("left");
+let current = "";
+
+function loadUsed(){
+  try{ return JSON.parse(localStorage.getItem(KEY)) || []; }catch(e){ return memUsed; }
+}
+let memUsed = [];
+function saveUsed(u){
+  memUsed = u;
+  try{ localStorage.setItem(KEY, JSON.stringify(u)); }catch(e){}
+}
+
+function draw(){
+  let used = loadUsed();
+  if(used.length >= QUESTIONS.length) used = [];
+  const pool = QUESTIONS.map((_,i)=>i).filter(i=>!used.includes(i));
+  const pick = pool[Math.floor(Math.random()*pool.length)];
+  used.push(pick); saveUsed(used);
+  const left = QUESTIONS.length - used.length;
+  leftEl.textContent = left ? `아직 안 열어 본 질문 ${left}개` : "45개 질문을 다 열어 봤어요 🎉";
+  return QUESTIONS[pick];
+}
+
+function today(){
+  const d = new Date();
+  return {label:`${d.getMonth()+1}월 ${d.getDate()}일의 질문`,
+          stamp:`${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,"0")}.${String(d.getDate()).padStart(2,"0")}`};
+}
+
+function openBox(){
+  if(stage.classList.contains("opened")) return;
+  current = draw();
+  qEl.textContent = current;
+  dayEl.textContent = today().label;
+  toast.textContent = "";
+  stage.classList.add("opened");
+  document.getElementById("hint").classList.add("gone");
+}
+
+bow.addEventListener("click", openBox);
+bow.addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();openBox();} });
+
+document.getElementById("copy").addEventListener("click", async ()=>{
+  const text = current;
+  try{
+    await navigator.clipboard.writeText(text);
+    toast.textContent = "복사했어요! 노션 「2026이 준 선물」에 붙여 넣어요 ✍️";
+  }catch(e){
+    // fallback: select the text so it can be copied by hand
+    const r = document.createRange(); r.selectNodeContents(qEl);
+    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    toast.textContent = "질문을 선택해 뒀어요. Ctrl+C(⌘C)로 복사해요";
+  }
+});
+
+document.getElementById("again").addEventListener("click", ()=>{
+  stage.classList.remove("opened");
+  document.getElementById("hint").classList.remove("gone");
+  // restart the bow wiggle by forcing reflow
+  void stage.offsetWidth;
+});
+
+// ---- crayon confetti background ----
+(function(){
+  const NS="http://www.w3.org/2000/svg";
+  const svg=document.getElementById("bg"), art=document.getElementById("bgArt");
+  let seed=20261231;
+  const rnd=()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+  const C=["#A47864","#C9A898","#B98B74","#FBF9F5","#D9B8A6"];
+  const el=(tag,attrs)=>{const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);art.appendChild(e);return e};
+  function build(){
+    const W=Math.max(window.innerWidth,320), H=Math.max(window.innerHeight,560);
+    svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+    art.innerHTML=""; seed=20261231;
+    // big soft blobs
+    [[.1,.18,.3],[.92,.32,.34],[.15,.78,.36],[.86,.9,.3],[.5,.55,.22]].forEach(([x,y,r],i)=>{
+      el("circle",{cx:x*W,cy:y*H,r:r*Math.min(W,H)+40,fill:i%2?"#E9D9CE":"#E4D1C4",opacity:.5});
+    });
+    // garland across the top
+    const sag=46, y0=-6;
+    el("path",{d:`M -10 ${y0} Q ${W/2} ${y0+sag*2} ${W+10} ${y0}`,stroke:"#8E6452","stroke-width":3,fill:"none"});
+    const n=Math.max(7,Math.round(W/52));
+    for(let i=1;i<n;i++){
+      const t=i/n, x=-10+(W+20)*t, y=(1-t)*(1-t)*y0+2*(1-t)*t*(y0+sag*2)+t*t*y0;
+      el("path",{d:`M ${x-13} ${y} L ${x+13} ${y} L ${x} ${y+30} Z`,fill:C[i%3===0?0:i%3===1?3:4]});
+    }
+    // confetti
+    const count=Math.round(W*H/2600);
+    for(let i=0;i<count;i++){
+      const x=rnd()*W, y=40+rnd()*(H-40), c=C[Math.floor(rnd()*C.length)], k=rnd(), rot=rnd()*360;
+      const mid=Math.min(280,W*0.36); if(Math.abs(x-W/2)<mid && y>60) continue;
+      if(rnd()<.55) continue;
+      if(k<.28) el("circle",{cx:x,cy:y,r:3+rnd()*5,fill:c});
+      else if(k<.5) el("rect",{x:x,y:y,width:10+rnd()*12,height:5+rnd()*5,rx:2,fill:c,transform:`rotate(${rot} ${x} ${y})`});
+      else if(k<.52) el("path",{d:`M ${x} ${y} q 6 -8 12 0 t 12 0 t 12 0`,stroke:c,"stroke-width":5,fill:"none","stroke-linecap":"round",transform:`rotate(${rot} ${x} ${y})`});
+      else if(k<.84){ const r=6+rnd()*6; el("path",{d:`M ${x} ${y-r} L ${x+r*.3} ${y-r*.3} L ${x+r} ${y} L ${x+r*.3} ${y+r*.3} L ${x} ${y+r} L ${x-r*.3} ${y+r*.3} L ${x-r} ${y} L ${x-r*.3} ${y-r*.3} Z`,fill:c}); }
+      else { const r=6+rnd()*5; el("path",{d:`M ${x-r} ${y} L ${x+r} ${y} M ${x} ${y-r} L ${x} ${y+r} M ${x-r*.7} ${y-r*.7} L ${x+r*.7} ${y+r*.7} M ${x-r*.7} ${y+r*.7} L ${x+r*.7} ${y-r*.7}`,stroke:c,"stroke-width":3,"stroke-linecap":"round"}); }
+    }
+  }
+  build();
+  let tm; window.addEventListener("resize",()=>{clearTimeout(tm);tm=setTimeout(build,150)});
+})();
+</script>
+</body>
+</html>
