@@ -9,12 +9,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --cloud:#F0EEE9;      /* PANTONE 11-4201 Cloud Dancer */
-    --cloud-hi:#F8F6F2;
-    --mocha:#A47864;      /* PANTONE 17-1230 Mocha Mousse */
-    --mocha-soft:#C9A898;
-    --mocha-pale:#E6D6CB;
-    --cocoa:#5E4034;
+    --cloud:#F6F0E4;      /* cream */
+    --cloud-hi:#FFFBF3;
+    --mocha:#C8423B;      /* christmas red */
+    --mocha-soft:#E9A39B;
+    --mocha-pale:#D8C6A8;
+    --cocoa:#1F4A36;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
@@ -117,7 +117,7 @@
   <h1>굿바이 <span>2026</span></h1>
   <p class="sub">리본을 하나씩 풀면서 올해를 정리해요</p>
 
-  <div class="hint" id="hint">리본을 당겨 봐</div>
+  <div class="hint" id="hint">리본을 당겨주세요</div>
   <div class="stage" id="stage">
     <svg viewBox="28 80 344 336" aria-label="리본으로 묶인 선물상자">
       <defs>
@@ -137,68 +137,68 @@
       </defs>
 
       <!-- shadow -->
-      <ellipse cx="200" cy="390" rx="160" ry="16" fill="#C9A898" opacity=".35" filter="url(#crayon)"/>
+      <ellipse cx="200" cy="390" rx="160" ry="16" fill="#B9A587" opacity=".4" filter="url(#crayon)"/>
 
       <!-- box body -->
-      <rect x="72" y="208" width="276" height="182" rx="16" fill="#7A5242" opacity=".35" filter="url(#crayon)"/>
-      <rect x="66" y="200" width="268" height="178" rx="14" fill="#FBF9F5"/>
+      <rect x="72" y="208" width="276" height="182" rx="16" fill="#1F4A36" opacity=".3" filter="url(#crayon)"/>
+      <rect x="66" y="200" width="268" height="178" rx="14" fill="#3E7D5A"/>
       <g id="body" filter="url(#crayon)">
-        <rect x="62" y="196" width="276" height="186" rx="16" fill="#FBF9F5"/>
-        <rect x="62" y="196" width="276" height="186" rx="16" fill="none" stroke="#5E4034" stroke-width="6"/>
+        <rect x="62" y="196" width="276" height="186" rx="16" fill="#3E7D5A"/>
+        <rect x="62" y="196" width="276" height="186" rx="16" fill="none" stroke="#1F4A36" stroke-width="6"/>
         <!-- crayon shading scribbles -->
         <path d="M80 360 L110 330 M90 372 L130 332 M108 374 L146 336 M250 372 L292 330 M268 374 L318 324 M290 372 L326 336"
-              stroke="#C9A898" stroke-width="5" stroke-linecap="round" opacity=".8"/>
-        <path d="M76 222 q14 -6 28 0 t28 0" stroke="#E6D6CB" stroke-width="6" fill="none" stroke-linecap="round"/>
+              stroke="#6FA382" stroke-width="5" stroke-linecap="round" opacity=".9"/>
+        <path d="M76 222 q14 -6 28 0 t28 0" stroke="#8DBB9C" stroke-width="6" fill="none" stroke-linecap="round"/>
         <!-- little polka dots -->
-        <g fill="#D9B8A6">
+        <g fill="#FFF6E6">
           <circle cx="110" cy="240" r="7"/><circle cx="148" cy="300" r="6"/><circle cx="96" cy="320" r="5"/>
           <circle cx="262" cy="236" r="6"/><circle cx="300" cy="300" r="7"/><circle cx="250" cy="330" r="5"/>
         </g>
       </g>
 
       <!-- sparkles that appear after opening -->
-      <g id="sparkles" filter="url(#crayon)" stroke="#A47864" stroke-width="4" stroke-linecap="round" fill="none">
+      <g id="sparkles" filter="url(#crayon)" stroke="#E0B04A" stroke-width="4" stroke-linecap="round" fill="none">
         <path d="M40 140 l0 22 M29 151 l22 0"/>
         <path d="M360 120 l0 26 M347 133 l26 0"/>
         <path d="M70 70 l0 14 M63 77 l14 0"/>
         <path d="M330 60 l0 16 M322 68 l16 0"/>
-        <circle cx="30" cy="250" r="5" fill="#C9A898" stroke="none"/>
-        <circle cx="372" cy="230" r="6" fill="#C9A898" stroke="none"/>
+        <circle cx="30" cy="250" r="5" fill="#C8423B" stroke="none"/>
+        <circle cx="372" cy="230" r="6" fill="#3E7D5A" stroke="none"/>
       </g>
 
       <!-- ribbon straps -->
       <g id="straps" filter="url(#crayon)">
-        <rect id="strapV" x="182" y="150" width="36" height="232" fill="#9A6B55"/>
-        <rect id="strapH" x="62" y="272" width="276" height="30" fill="#9A6B55"/>
-        <path d="M70 281 L176 279 M224 279 L330 281" stroke="#C9A898" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+        <rect id="strapV" x="182" y="150" width="36" height="232" fill="#C8423B"/>
+        <rect id="strapH" x="62" y="272" width="276" height="30" fill="#C8423B"/>
+        <path d="M70 281 L176 279 M224 279 L330 281" stroke="#F0958C" stroke-width="3" stroke-linecap="round" opacity=".8"/>
       </g>
 
       <!-- lid -->
       <g id="lid">
-        <rect x="50" y="154" width="300" height="48" rx="12" fill="#F8F6F2"/>
+        <rect x="50" y="154" width="300" height="48" rx="12" fill="#357052"/>
         <g filter="url(#crayon)">
-        <rect x="46" y="150" width="308" height="56" rx="14" fill="#F8F6F2"/>
-        <rect x="46" y="150" width="308" height="56" rx="14" fill="none" stroke="#5E4034" stroke-width="6"/>
-        <rect x="182" y="150" width="36" height="56" fill="#9A6B55"/>
+        <rect x="46" y="150" width="308" height="56" rx="14" fill="#357052"/>
+        <rect x="46" y="150" width="308" height="56" rx="14" fill="none" stroke="#1F4A36" stroke-width="6"/>
+        <rect x="182" y="150" width="36" height="56" fill="#C8423B"/>
         <path d="M64 196 L84 170 M78 198 L100 170 M300 198 L322 170 M316 198 L336 172"
-              stroke="#C9A898" stroke-width="5" stroke-linecap="round" opacity=".55"/>
+              stroke="#6FA382" stroke-width="5" stroke-linecap="round" opacity=".9"/>
         </g>
       </g>
 
       <!-- bow (click target) -->
       <g id="bow" role="button" tabindex="0" aria-label="리본 풀기" filter="url(#crayon)">
         <!-- tails -->
-        <path d="M196 150 C186 180 170 196 156 214 L176 214 L190 200 C196 186 198 168 200 152Z" fill="#7A5242" stroke="#5E4034" stroke-width="3"/>
-        <path d="M204 150 C214 180 230 196 244 214 L224 214 L210 200 C204 186 202 168 200 152Z" fill="#7A5242" stroke="#5E4034" stroke-width="3"/>
+        <path d="M196 150 C186 180 170 196 156 214 L176 214 L190 200 C196 186 198 168 200 152Z" fill="#9E2B25" stroke="#1F4A36" stroke-width="3"/>
+        <path d="M204 150 C214 180 230 196 244 214 L224 214 L210 200 C204 186 202 168 200 152Z" fill="#9E2B25" stroke="#1F4A36" stroke-width="3"/>
         <!-- loops -->
-        <path d="M198 146 C170 96 108 92 112 130 C116 166 172 160 198 150Z" fill="#9A6B55" stroke="#5E4034" stroke-width="4"/>
-        <path d="M202 146 C230 96 292 92 288 130 C284 166 228 160 202 150Z" fill="#9A6B55" stroke="#5E4034" stroke-width="4"/>
+        <path d="M198 146 C170 96 108 92 112 130 C116 166 172 160 198 150Z" fill="#C8423B" stroke="#1F4A36" stroke-width="4"/>
+        <path d="M202 146 C230 96 292 92 288 130 C284 166 228 160 202 150Z" fill="#C8423B" stroke="#1F4A36" stroke-width="4"/>
         <!-- loop inner folds -->
-        <path d="M190 144 C168 120 136 116 132 128" stroke="#E6D6CB" stroke-width="5" fill="none" stroke-linecap="round"/>
-        <path d="M210 144 C232 120 264 116 268 128" stroke="#E6D6CB" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M190 144 C168 120 136 116 132 128" stroke="#F0958C" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M210 144 C232 120 264 116 268 128" stroke="#F0958C" stroke-width="5" fill="none" stroke-linecap="round"/>
         <!-- knot -->
-        <rect x="184" y="130" width="32" height="32" rx="11" fill="#7A5242" stroke="#5E4034" stroke-width="4"/>
-        <rect x="190" y="136" width="10" height="7" rx="3" fill="#C9A898"/>
+        <rect x="184" y="130" width="32" height="32" rx="11" fill="#9E2B25" stroke="#1F4A36" stroke-width="4"/>
+        <rect x="190" y="136" width="10" height="7" rx="3" fill="#F0958C"/>
         <!-- bigger invisible hit area -->
         <rect x="100" y="86" width="200" height="132" fill="transparent"/>
       </g>
@@ -342,7 +342,7 @@ document.getElementById("again").addEventListener("click", ()=>{
   const svg=document.getElementById("bg"), art=document.getElementById("bgArt");
   let seed=20261231;
   const rnd=()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
-  const C=["#A47864","#C9A898","#B98B74","#FBF9F5","#D9B8A6"];
+  const C=["#C8423B","#3E7D5A","#E0B04A","#FFFBF3","#6FA382","#E9837A"];
   const el=(tag,attrs)=>{const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);art.appendChild(e);return e};
   function build(){
     const W=Math.max(window.innerWidth,320), H=Math.max(window.innerHeight,560);
@@ -350,15 +350,15 @@ document.getElementById("again").addEventListener("click", ()=>{
     art.innerHTML=""; seed=20261231;
     // big soft blobs
     [[.1,.18,.3],[.92,.32,.34],[.15,.78,.36],[.86,.9,.3],[.5,.55,.22]].forEach(([x,y,r],i)=>{
-      el("circle",{cx:x*W,cy:y*H,r:r*Math.min(W,H)+40,fill:i%2?"#E9D9CE":"#E4D1C4",opacity:.5});
+      el("circle",{cx:x*W,cy:y*H,r:r*Math.min(W,H)+40,fill:i%2?"#E3ECDD":"#F3DDD5",opacity:.7});
     });
     // garland across the top
     const sag=46, y0=-6;
-    el("path",{d:`M -10 ${y0} Q ${W/2} ${y0+sag*2} ${W+10} ${y0}`,stroke:"#8E6452","stroke-width":3,fill:"none"});
+    el("path",{d:`M -10 ${y0} Q ${W/2} ${y0+sag*2} ${W+10} ${y0}`,stroke:"#1F4A36","stroke-width":3,fill:"none"});
     const n=Math.max(7,Math.round(W/52));
     for(let i=1;i<n;i++){
       const t=i/n, x=-10+(W+20)*t, y=(1-t)*(1-t)*y0+2*(1-t)*t*(y0+sag*2)+t*t*y0;
-      el("path",{d:`M ${x-13} ${y} L ${x+13} ${y} L ${x} ${y+30} Z`,fill:C[i%3===0?0:i%3===1?3:4]});
+      el("path",{d:`M ${x-13} ${y} L ${x+13} ${y} L ${x} ${y+30} Z`,fill:["#C8423B","#3E7D5A","#E0B04A"][i%3]});
     }
     // confetti
     const count=Math.round(W*H/2600);
